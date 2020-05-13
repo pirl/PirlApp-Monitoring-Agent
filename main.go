@@ -5,9 +5,9 @@ import (
 	"compress/gzip"
 	"encoding/json"
 	"fmt"
+	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/mem"
-	"github.com/shirou/gopsutil/cpu"
 	"io"
 	"io/ioutil"
 	"math"
@@ -20,30 +20,18 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-
 )
-
-
 
 type CpuStats struct {
 	Average int `json:"avg"`
 }
 
-// TODO
-// grab stat to struct
-// encrypt the stats
-// create config file
-
-
-
 func version(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "1.0")
-
 
 }
 func ping(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "pong")
-
 
 }
 
@@ -76,7 +64,6 @@ func collectStatsHome(w http.ResponseWriter, r *http.Request) {
 </html>
 `)
 
-
 }
 
 func collectStatsCPU(w http.ResponseWriter, r *http.Request) {
@@ -102,7 +89,7 @@ func collectStatsMEM(w http.ResponseWriter, r *http.Request) {
 }
 
 func collectStatsDISK(w http.ResponseWriter, r *http.Request) {
-	v, err:= disk.Usage("/")
+	v, err := disk.Usage("/")
 	if err != nil {
 		fmt.Printf("nil")
 	}
@@ -111,10 +98,9 @@ func collectStatsDISK(w http.ResponseWriter, r *http.Request) {
 
 }
 
-
 func main() {
 	PortToRun := os.Getenv("PIRLAPPPORT")
-	if len(os.Getenv("PIRLAPPPORT"))  == 0 {
+	if len(os.Getenv("PIRLAPPPORT")) == 0 {
 		PortToRun = ":8081"
 	} else {
 		PortToRun = ":" + os.Getenv("PIRLAPPPORT")
@@ -196,7 +182,6 @@ func (fi bindataFileInfo) IsDir() bool {
 func (fi bindataFileInfo) Sys() interface{} {
 	return nil
 }
-
 
 type assetFile struct {
 	*bytes.Reader
