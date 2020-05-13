@@ -1,0 +1,16 @@
+[Unit]
+Description=PirlApp Monitoring Agent
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/pirl/pirlapp-agent.conf
+User=daemon
+Group=daemon
+ExecStart=/usr/bin/pirlapp-agent
+Restart=always
+RemainAfterExit=no
+RestartSec=5s
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
